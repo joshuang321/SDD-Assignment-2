@@ -124,17 +124,22 @@ namespace SDD_Assignment_2
                 }
                 else if (choice == 1)
                 {
-                    //start game
-
+                    // For Documentation/Implementation ..
+                    // Start New Game
+                    // Note: Use new Game() to create Game object, and call StartGame() to start
                 }
                 else if (choice == 2)
                 {
-                    //open saved game
+                    // For Documentation/Implementation ..
+                    // Open Saved Game
+                    // Note: Check for if the file exists using CheckIfFileExists(), and then use new Game(loadFromFile=true) to
+                    // create Game object, and call StartGame() to start
 
                 }
                 else if (choice == 3)
                 {
-                    //get the high score
+                    // For Documentation/Implementation ..
+                    // View Highscore
 
                 }
             }
@@ -143,10 +148,10 @@ namespace SDD_Assignment_2
         public static void DisplayMainMenu()
         {
             Console.WriteLine("=======================GAME MENU========================");
-            Console.WriteLine("[0] Exit the game");
-            Console.WriteLine("[1] Start a new game");
-            Console.WriteLine("[2] Open saved game");
-            Console.WriteLine("[3] View highscore");
+            Console.WriteLine("[0] Exit the Game");
+            Console.WriteLine("[1] Start a New Game");
+            Console.WriteLine("[2] Open Saved Game");
+            Console.WriteLine("[3] View Highscore");
         }
     }
 }

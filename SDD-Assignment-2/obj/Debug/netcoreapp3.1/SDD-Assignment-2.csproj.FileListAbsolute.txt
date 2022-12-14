@@ -12,3 +12,17 @@ D:\C# stuff\SDD Assignment 2\SDD-Assignment-2\bin\Debug\netcoreapp3.1\SDD-Assign
 D:\C# stuff\SDD Assignment 2\SDD-Assignment-2\obj\Debug\netcoreapp3.1\SDD-Assignment-2.dll
 D:\C# stuff\SDD Assignment 2\SDD-Assignment-2\obj\Debug\netcoreapp3.1\SDD-Assignment-2.pdb
 D:\C# stuff\SDD Assignment 2\SDD-Assignment-2\obj\Debug\netcoreapp3.1\SDD-Assignment-2.genruntimeconfig.cache
+C:\Users\joshua\Documents\GitHub\SDD-Assignment-2\SDD-Assignment-2\obj\Debug\netcoreapp3.1\SDD-Assignment-2.csproj.AssemblyReference.cache
+C:\Users\joshua\Documents\GitHub\SDD-Assignment-2\SDD-Assignment-2\obj\Debug\netcoreapp3.1\SDD-Assignment-2.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\joshua\Documents\GitHub\SDD-Assignment-2\SDD-Assignment-2\obj\Debug\netcoreapp3.1\SDD-Assignment-2.AssemblyInfoInputs.cache
+C:\Users\joshua\Documents\GitHub\SDD-Assignment-2\SDD-Assignment-2\obj\Debug\netcoreapp3.1\SDD-Assignment-2.AssemblyInfo.cs
+C:\Users\joshua\Documents\GitHub\SDD-Assignment-2\SDD-Assignment-2\obj\Debug\netcoreapp3.1\SDD-Assignment-2.csproj.CoreCompileInputs.cache
+C:\Users\joshua\Documents\GitHub\SDD-Assignment-2\SDD-Assignment-2\obj\Debug\netcoreapp3.1\SDD-Assignment-2.dll
+C:\Users\joshua\Documents\GitHub\SDD-Assignment-2\SDD-Assignment-2\obj\Debug\netcoreapp3.1\SDD-Assignment-2.pdb
+C:\Users\joshua\Documents\GitHub\SDD-Assignment-2\SDD-Assignment-2\bin\Debug\netcoreapp3.1\SDD-Assignment-2.exe
+C:\Users\joshua\Documents\GitHub\SDD-Assignment-2\SDD-Assignment-2\bin\Debug\netcoreapp3.1\SDD-Assignment-2.deps.json
+C:\Users\joshua\Documents\GitHub\SDD-Assignment-2\SDD-Assignment-2\bin\Debug\netcoreapp3.1\SDD-Assignment-2.runtimeconfig.json
+C:\Users\joshua\Documents\GitHub\SDD-Assignment-2\SDD-Assignment-2\bin\Debug\netcoreapp3.1\SDD-Assignment-2.runtimeconfig.dev.json
+C:\Users\joshua\Documents\GitHub\SDD-Assignment-2\SDD-Assignment-2\bin\Debug\netcoreapp3.1\SDD-Assignment-2.dll
+C:\Users\joshua\Documents\GitHub\SDD-Assignment-2\SDD-Assignment-2\bin\Debug\netcoreapp3.1\SDD-Assignment-2.pdb
+C:\Users\joshua\Documents\GitHub\SDD-Assignment-2\SDD-Assignment-2\obj\Debug\netcoreapp3.1\SDD-Assignment-2.genruntimeconfig.cache
