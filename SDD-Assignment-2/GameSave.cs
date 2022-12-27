@@ -7,11 +7,14 @@ namespace SDD_Assignment_2
     public partial class Game
     {
         static readonly string GAMESV_FILENAME = "SDD_City.dat";
+        static readonly int INVALID_BUILDING = 5;
 
         public Game(bool loadFromFile = false)
         {
             // For Documentation/Implementation ..
-            // Note: Make sure that two randomly selected buildings are assigned to building1 & building2
+            // Building1 and building2 is set to ' ' when new game is created
+
+            BuildingsPlacementInMap = new int[400];
 
             if (loadFromFile)
             {
@@ -20,14 +23,18 @@ namespace SDD_Assignment_2
             }
             else
             {
+                for (int i = 0; i < 400; i++)
+                    BuildingsPlacementInMap[i] = INVALID_BUILDING;
 
+                building1 = INVALID_BUILDING;
+                building2 = INVALID_BUILDING;
             }
         }
 
         int  coins { get; set; }
-        char building1 { get; set; }
-        char building2 { get; set; }
-        char[,] BuidingsPlacementInMap { get; set; }
+        int building1 { get; set; }
+        int building2 { get; set; }
+        int[] BuildingsPlacementInMap { get; set; }
 
         public void SaveGame()
         {

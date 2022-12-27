@@ -127,6 +127,8 @@ namespace SDD_Assignment_2
                     // For Documentation/Implementation ..
                     // Start New Game
                     // Note: Use new Game() to create Game object, and call StartGame() to start
+                    Game game = new Game();
+                    game.StartGame();
                 }
                 else if (choice == 2)
                 {
