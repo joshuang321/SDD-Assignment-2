@@ -68,7 +68,9 @@ namespace SDD_Assignment_2
                         continue;
                     }
 
+                    // Zero index row and column
                     row--; column--;
+
                     // Check that the position is empty
                     if (BuildingsPlacementInMap[row * 20 + column] != INVALID_BUILDING)
                     {
@@ -78,10 +80,10 @@ namespace SDD_Assignment_2
 
                     // Check if the building is adjacent to another building if it's not first round
                     if (!first &&
-                        BuildingsPlacementInMap[(row - 1) * 20 + column] == INVALID_BUILDING &&
-                        BuildingsPlacementInMap[row * 20 + column - 1] == INVALID_BUILDING &&
-                        BuildingsPlacementInMap[row * 20 + column + 1] == INVALID_BUILDING &&
-                        BuildingsPlacementInMap[(row + 1) * 20 + column] == INVALID_BUILDING)
+                        (row == 0 || BuildingsPlacementInMap[(row - 1) * 20 + column] == INVALID_BUILDING) &&
+                        (column == 0 || BuildingsPlacementInMap[row * 20 + column - 1] == INVALID_BUILDING) &&
+                        (column == 19 || BuildingsPlacementInMap[row * 20 + column + 1] == INVALID_BUILDING) &&
+                        (row == 19 || BuildingsPlacementInMap[(row + 1) * 20 + column] == INVALID_BUILDING))
                         Console.WriteLine("Building must be placed to an already adjacent building! Try Again!");
                     else
                         break;
@@ -94,6 +96,9 @@ namespace SDD_Assignment_2
                 // Update the number of coins accordingly ..
                 updateCoins(buildingChoice);
 
+                // Set the first flag is false to signify a new round
+                if (first)
+                    first = false;
                 SelectBuildings();
             }
         }
