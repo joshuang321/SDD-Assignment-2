@@ -19,25 +19,35 @@ namespace SDD_Assignment_2
                 if (first)
                     SelectBuildings();
 
-                Console.WriteLine("Coins: " + coins);
                 PrintMenu();
 
                 Console.WriteLine("[1] Building: " + buildingStrArr[building1]);
                 Console.WriteLine("[2] Building: " + buildingStrArr[building2]);
+                Console.WriteLine("[3] Save Game");
                 Console.Write("Your option? ");
 
+                int buildingChoice = 0;
 
-                while(true)
+                while (true)
                 {
-                    int buildingChoice = int.Parse(Console.ReadLine());
+                    buildingChoice = int.Parse(Console.ReadLine());
 
-                    if (buildingChoice == 1 ||
-                        buildingChoice == 2)
+                    if (buildingChoice < 1 ||
+                        buildingChoice > 3)
                         Console.WriteLine("Invalid option! Try Again!");
+                    else
+                        break;
                 }
 
+                // To do:
+                // Handle buidngChoice equals 3; Save Game, by calling SaveGame class Method and exiting game
+
+
+                // Get the correctly selected building and put in in buildingChoice
+                buildingChoice = buildingChoice == 1 ? building1 : building2;
+
                 int row = 0, column = 0;
-                Console.Write("Row and Column (1-20)? ");
+                Console.Write("Row and Column (E.g: 1 20)? ");
                 
                 while (true)
                 {
@@ -45,45 +55,69 @@ namespace SDD_Assignment_2
                     row = int.Parse(split[0]);
 
                     if (row < 1 || row > 20)
+                    {
                         Console.WriteLine("Invalid Row! Try Again!");
+                        break;
+                    }
 
                     column = int.Parse(split[1]);
 
                     if (column < 1 || column > 20)
+                    {
                         Console.WriteLine("Invalid Column! Try Again!");
+                        continue;
+                    }
 
                     row--; column--;
-
-                    if (BuildingsPlacementInMap[row*20 + column] == INVALID_BUILDING)
+                    // Check that the position is empty
+                    if (BuildingsPlacementInMap[row * 20 + column] != INVALID_BUILDING)
+                    {
                         Console.WriteLine("Building has already been placed here! Try Again!");
+                        continue;
+                    }
 
+                    // Check if the building is adjacent to another building if it's not first round
                     if (!first &&
                         BuildingsPlacementInMap[(row - 1) * 20 + column] == INVALID_BUILDING &&
                         BuildingsPlacementInMap[row * 20 + column - 1] == INVALID_BUILDING &&
                         BuildingsPlacementInMap[row * 20 + column + 1] == INVALID_BUILDING &&
-                        BuildingsPlacementInMap[(row + 1) + column] == INVALID_BUILDING)
+                        BuildingsPlacementInMap[(row + 1) * 20 + column] == INVALID_BUILDING)
                         Console.WriteLine("Building must be placed to an already adjacent building! Try Again!");
+                    else
+                        break;
                 }
+
+                // Place building from buildingChoice into placement map and deduct coins
+                BuildingsPlacementInMap[row * 20 + column] = buildingChoice;
+                coins--;
+
+                // Update the number of coins accordingly ..
+                updateCoins(buildingChoice);
 
                 SelectBuildings();
             }
         }
 
+        public void updateCoins(int buildingChoice)
+        {
+            // To do: Check if placed residential build
+        }
+
         public void SelectBuildings()
         {
             Random random = new Random();
-            building1 = buildingStr[random.Next(0, 4)];
+            building1 = random.Next(0, 4);
 
             do
             {
-                building2 = buildingStr[random.Next(0, 4)];
+                building2 = random.Next(0, 4);
             } while (building1 == building2);
         }
 
         public void PrintMenu()
         {
-            for (int i = 0; i < 81; i++) 
-                Console.Write('=');
+            Console.Clear();
+            Console.WriteLine("Coins: " + coins);
 
             int k = 0;
             for (int i = 0; i < 20; i++)
@@ -94,7 +128,7 @@ namespace SDD_Assignment_2
                 Console.Write('\n');
 
                 for (int j = 0; j < 20; j++)
-                    Console.Write("| " + buildingStr[BuidingsPlacementInMap[k++]] + " ");
+                    Console.Write("| " + buildingStr[BuildingsPlacementInMap[k++]] + " ");
 
                 Console.Write("|\n");
             }

@@ -28,6 +28,8 @@ namespace SDD_Assignment_2
 
                 building1 = INVALID_BUILDING;
                 building2 = INVALID_BUILDING;
+
+                coins = 16;
             }
         }
 
@@ -35,6 +37,9 @@ namespace SDD_Assignment_2
         int building1 { get; set; }
         int building2 { get; set; }
         int[] BuildingsPlacementInMap { get; set; }
+
+        // Store the number of buildings placed
+        int numPlaced { get; set; }
 
         public void SaveGame()
         {

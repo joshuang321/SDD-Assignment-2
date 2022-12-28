@@ -116,7 +116,7 @@ namespace SDD_Assignment_2
             {
                DisplayMainMenu();
                 Console.Write("Please enter your option: ");
-                int choice = Convert.ToInt32(Console.ReadLine());
+                int choice = int.Parse(Console.ReadLine());
                 if (choice == 0)
                 {
                     Console.WriteLine("Goodbye!");
@@ -149,6 +149,8 @@ namespace SDD_Assignment_2
 
         public static void DisplayMainMenu()
         {
+            Console.Clear();
+
             Console.WriteLine("=======================GAME MENU========================");
             Console.WriteLine("[0] Exit the Game");
             Console.WriteLine("[1] Start a New Game");
