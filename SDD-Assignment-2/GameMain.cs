@@ -18,6 +18,12 @@ namespace SDD_Assignment_2
             {
                 if (first)
                     SelectBuildings();
+                else if (numPlaced == 400 ||
+                    coins == 0)
+                {
+                    FinishGame();
+                    break;
+                }
 
                 PrintMenu();
 
@@ -39,11 +45,12 @@ namespace SDD_Assignment_2
                         break;
                 }
 
-                // To do:
-                // Handle buidngChoice equals 3; Save Game, by calling SaveGame class Method and exiting game
+                if (buildingChoice == 3)
+                {
+                    SaveGame();
+                    break;
+                }
 
-
-                // Get the correctly selected building and put in in buildingChoice
                 buildingChoice = buildingChoice == 1 ? building1 : building2;
 
                 int row = 0, column = 0;
@@ -89,12 +96,12 @@ namespace SDD_Assignment_2
                         break;
                 }
 
-                // Place building from buildingChoice into placement map and deduct coins
-                BuildingsPlacementInMap[row * 20 + column] = buildingChoice;
+\                BuildingsPlacementInMap[row * 20 + column] = buildingChoice;
                 coins--;
+                numPlaced++;
 
                 // Update the number of coins accordingly ..
-                updateCoins(buildingChoice);
+                updateCoins(buildingChoice, row, column);
 
                 // Set the first flag is false to signify a new round
                 if (first)
@@ -103,12 +110,143 @@ namespace SDD_Assignment_2
             }
         }
 
-        public void updateCoins(int buildingChoice)
+        void updateCoins(int buildingChoice, int row, int column)
         {
-            // To do: Check if placed residential build
+            if (buildingChoice == INDUSTRY ||
+                buildingChoice == COMMERCIAL)
+            {
+                if (row != 19 && BuildingsPlacementInMap[(row + 1) * 20 + column] == RESIDENTIAL)
+                    coins++;
+
+                if (row != 0 && BuildingsPlacementInMap[(row - 1) * 20 + column] == RESIDENTIAL)
+                    coins++;
+
+                if (column != 19 && BuildingsPlacementInMap[row * 20 + column + 1] == RESIDENTIAL)
+                    coins++;
+
+                if (column != 0 && BuildingsPlacementInMap[row * 20 + column - 1] == RESIDENTIAL)
+                    coins++;
+            }
         }
 
-        public void SelectBuildings()
+        void FinishGame()
+        {
+            int points = 0;
+            int index;
+            int roadCount;
+
+            for (int i=0; i<20;i++)
+            {
+                roadCount = 0;
+
+                for (int j=0; j<20; j++)
+                {
+                    index = i * 20 + j;
+
+                    if (BuildingsPlacementInMap[index] == ROAD)
+                    {
+                        roadCount++;
+                    }
+                    else
+                    {
+                        if (roadCount != 0)
+                        {
+                            points = roadCount * roadCount;
+                            roadCount = 0;
+                        }
+
+                        switch (BuildingsPlacementInMap[index])
+                        {
+                            case RESIDENTIAL:
+                                int respoints = 0;
+                                if (i != 0)
+                                {
+                                    if (BuildingsPlacementInMap[index - 20] == RESIDENTIAL ||
+                                        BuildingsPlacementInMap[index - 20] == COMMERCIAL)
+                                        respoints++;
+                                    else if (BuildingsPlacementInMap[index - 20] == PARK)
+                                        respoints += 2;
+                                    else if (BuildingsPlacementInMap[index - 20] == INDUSTRY)
+                                    {
+                                        points++;
+                                        break;
+                                    }
+                                }
+                                if (i != 19)
+                                {
+                                    if (BuildingsPlacementInMap[index + 20] == RESIDENTIAL ||
+                                        BuildingsPlacementInMap[index + 20] == COMMERCIAL)
+                                        respoints++;
+                                    else if (BuildingsPlacementInMap[index + 20] == PARK)
+                                        respoints += 2;
+                                    else if (BuildingsPlacementInMap[index + 20] == INDUSTRY)
+                                    {
+                                        points++;
+                                        break;
+                                    }
+                                }
+                                if (j != 0)
+                                {
+                                    if (BuildingsPlacementInMap[index - 1] == RESIDENTIAL ||
+                                        BuildingsPlacementInMap[index - 1] == COMMERCIAL)
+                                        respoints++;
+                                    else if (BuildingsPlacementInMap[index - 1] == PARK)
+                                        respoints += 2;
+                                    else if (BuildingsPlacementInMap[index - 1] == INDUSTRY)
+                                    {
+                                        points++;
+                                        break;
+                                    }
+                                }
+                                if (j != 19)
+                                {
+                                    if (BuildingsPlacementInMap[index + 1] == RESIDENTIAL ||
+                                        BuildingsPlacementInMap[index + 1] == COMMERCIAL)
+                                        respoints++;
+                                    else if (BuildingsPlacementInMap[index + 1] == PARK)
+                                        respoints += 2;
+                                    else if (BuildingsPlacementInMap[index + 1] == INDUSTRY)
+                                    {
+                                        points++;
+                                        break;
+                                    }
+                                }
+                                break;
+
+                            case INDUSTRY:
+                                points++;
+                                break;
+
+                            case COMMERCIAL:
+                                if (i != 0 && BuildingsPlacementInMap[index - 20] == COMMERCIAL)
+                                    points++;
+                                if (i != 19 && BuildingsPlacementInMap[index + 20] == COMMERCIAL)
+                                    points++;
+                                if (j != 0 && BuildingsPlacementInMap[index - 1] == COMMERCIAL)
+                                    points++;
+                                if (j != 19 && BuildingsPlacementInMap[index + 1] == COMMERCIAL)
+                                    points++;
+                                break;
+
+                            case PARK:
+                                if (i != 0 && BuildingsPlacementInMap[index - 20] == PARK)
+                                    points++;
+                                if (i != 19 && BuildingsPlacementInMap[index + 20] == PARK)
+                                    points++;
+                                if (j != 0 && BuildingsPlacementInMap[index - 1] == PARK)
+                                    points++;
+                                if (j != 19 && BuildingsPlacementInMap[index + 1] == PARK)
+                                    points++;
+                                break;
+                        }
+                    }
+                }
+            }
+
+            Console.WriteLine($"Game Over! You have scored {points} points!");
+        }
+
+        void SelectBuildings()
         {
             Random random = new Random();
             building1 = random.Next(0, 4);
@@ -119,7 +257,7 @@ namespace SDD_Assignment_2
             } while (building1 == building2);
         }
 
-        public void PrintMenu()
+        void PrintMenu()
         {
             Console.Clear();
             Console.WriteLine("Coins: " + coins);

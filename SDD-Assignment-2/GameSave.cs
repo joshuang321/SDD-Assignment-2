@@ -6,20 +6,25 @@ namespace SDD_Assignment_2
 {
     public partial class Game
     {
-        static readonly string GAMESV_FILENAME = "SDD_City.dat";
-        static readonly int INVALID_BUILDING = 5;
+        const string GAMESV_FILENAME = "SDD_City.dat";
+        const int ROAD = 0;
+        const int RESIDENTIAL = 1;
+        const int INDUSTRY = 2;
+        const int COMMERCIAL = 3;
+        const int PARK = 4;
+        const int INVALID_BUILDING = 5;
 
         public Game(bool loadFromFile = false)
         {
             // For Documentation/Implementation ..
-            // Building1 and building2 is set to ' ' when new game is created
-
+            
             BuildingsPlacementInMap = new int[400];
 
             if (loadFromFile)
             {
                 // For Documentation/Implementation ..
                 // Check if file exists first before trying to load from file ..
+
             }
             else
             {
@@ -30,6 +35,7 @@ namespace SDD_Assignment_2
                 building2 = INVALID_BUILDING;
 
                 coins = 16;
+                numPlaced = 0;
             }
         }
 
@@ -46,11 +52,11 @@ namespace SDD_Assignment_2
             // For Documentation/Implementation ..
         }
 
-        static bool CheckIfFileExists()
+        public static bool FileExists()
         {
             // For Documentation/Implementation ..
             // Note: Check if the file with name GAMESV_FILENAME exists in current Directory and return true
-            // if exists, false otherwise .. 
+            // if exists, false otherwise ..
 
             return false;
         }
