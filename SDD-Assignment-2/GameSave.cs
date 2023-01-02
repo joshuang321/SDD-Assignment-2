@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.IO;
 
 namespace SDD_Assignment_2
 {
@@ -24,7 +25,6 @@ namespace SDD_Assignment_2
             {
                 // For Documentation/Implementation ..
                 // Check if file exists first before trying to load from file ..
-
             }
             else
             {
@@ -47,9 +47,22 @@ namespace SDD_Assignment_2
         // Store the number of buildings placed
         int numPlaced { get; set; }
 
-        public void SaveGame()
+        void SaveGame()
         {
             // For Documentation/Implementation ..
+            using (StreamWriter sw =  new StreamWriter(GAMESV_FILENAME))
+            {
+                sw.Write(coins);
+                sw.Write(';');
+                sw.Write(building1);
+                sw.Write(';');
+                sw.Write(building2);
+                sw.Write(numPlaced);
+                sw.Write(';');
+
+                foreach (int building in BuildingsPlacementInMap)
+                    sw.Write(building);
+            }
         }
 
         public static bool FileExists()
@@ -58,7 +71,7 @@ namespace SDD_Assignment_2
             // Note: Check if the file with name GAMESV_FILENAME exists in current Directory and return true
             // if exists, false otherwise ..
 
-            return false;
+            return File.Exists(GAMESV_FILENAME);
         }
     }
 }

@@ -6,8 +6,7 @@ namespace SDD_Assignment_2
 {
     public partial class Game
     {
-        readonly static string buildingStr = "*RICO ";
-
+        const string buildingStr = "*RICO ";
         readonly static string[] buildingStrArr = { "Road", "Residential", "Industry", "Commercial", "Park" };
 
         public void StartGame()
@@ -129,17 +128,18 @@ namespace SDD_Assignment_2
             }
         }
 
-        void FinishGame()
+        int GetCurrentPoints()
         {
             int points = 0;
             int index;
             int roadCount;
+            int nIndustry = 0;
 
-            for (int i=0; i<20;i++)
+            for (int i = 0; i < 20; i++)
             {
                 roadCount = 0;
 
-                for (int j=0; j<20; j++)
+                for (int j = 0; j < 20; j++)
                 {
                     index = i * 20 + j;
 
@@ -214,7 +214,7 @@ namespace SDD_Assignment_2
                                 break;
 
                             case INDUSTRY:
-                                points++;
+                                nIndustry++;
                                 break;
 
                             case COMMERCIAL:
@@ -242,8 +242,13 @@ namespace SDD_Assignment_2
                     }
                 }
             }
+            points += nIndustry * nIndustry;
+            return points;
+        }
 
-            Console.WriteLine($"Game Over! You have scored {points} points!");
+        void FinishGame()
+        {  
+            Console.WriteLine($"Game Over! You have scored {GetCurrentPoints()} points!");
         }
 
         void SelectBuildings()
@@ -260,7 +265,7 @@ namespace SDD_Assignment_2
         void PrintMenu()
         {
             Console.Clear();
-            Console.WriteLine("Coins: " + coins);
+            Console.WriteLine("Coins: " + coins + "   Points: " + GetCurrentPoints());
 
             int k = 0;
             for (int i = 0; i < 20; i++)
