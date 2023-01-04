@@ -24,6 +24,7 @@ namespace SDD_Assignment_2
                     // Start New Game
                     // Note: Use new Game() to create Game object, and call StartGame() to start
                     game = new Game();
+                    game.ClearFile();
                     game.StartGame();
                 }
                 else if (choice == 2)
@@ -37,20 +38,27 @@ namespace SDD_Assignment_2
                         game = new Game(true);
                         game.StartGame();
                     }
+                    else
+                    {
+                        Console.Clear(); 
+                        Console.WriteLine("Error: Data file is not found! Please try creating a new game! Press Enter key to continue");
+                        if (Console.ReadKey().Key.Equals(ConsoleKey.Enter))
+                        {
+                            Console.Clear();
+                        }
+                    }
                 }
                 else if (choice == 3)
                 {
                     // For Documentation/Implementation ..
                     // View Highscore
-
+                    
                 }
             }
         }
 
         public static void DisplayMainMenu()
         {
-            Console.Clear();
-
             Console.WriteLine("=======================GAME MENU========================");
             Console.WriteLine("[0] Exit the Game");
             Console.WriteLine("[1] Start a New Game");

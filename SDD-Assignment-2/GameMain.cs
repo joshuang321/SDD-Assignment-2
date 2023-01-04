@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 
 namespace SDD_Assignment_2
@@ -20,8 +21,14 @@ namespace SDD_Assignment_2
                 else if (numPlaced == 400 ||
                     coins == 0)
                 {
+                    Console.Clear(); 
                     FinishGame();
-                    break;
+                    ClearFile();
+                    if (Console.ReadKey().Key.Equals(ConsoleKey.Enter))
+                    {
+                        Console.Clear();
+                        break; 
+                    }
                 }
 
                 PrintMenu();
@@ -29,12 +36,12 @@ namespace SDD_Assignment_2
                 Console.WriteLine("[1] Building: " + buildingStrArr[building1]);
                 Console.WriteLine("[2] Building: " + buildingStrArr[building2]);
                 Console.WriteLine("[3] Save Game");
-                Console.Write("Your option? ");
 
                 int buildingChoice = 0;
 
                 while (true)
                 {
+                    Console.Write("Your option? ");
                     buildingChoice = int.Parse(Console.ReadLine());
 
                     if (buildingChoice < 1 ||
@@ -46,17 +53,68 @@ namespace SDD_Assignment_2
 
                 if (buildingChoice == 3)
                 {
-                    SaveGame();
+                    //Don't bother saving an empty map. 
+                    if (FileExists())
+                    {
+                        using (StreamReader reader = File.OpenText(GAMESV_FILENAME))
+                        {
+                            string data = reader.ReadToEnd();
+                            if (data.Length.Equals(0))
+                            {
+                                int count = 0;
+                                foreach (char c in data.Split(';')[4])
+                                {
+                                    if (c.Equals('5')) ++count;
+                                }
+                                if (count.Equals(data.Split(';')[4].Length))
+                                {
+                                    reader.Close();
+                                    ClearFile();
+                                }
+                                else
+                                {
+                                    reader.Close();
+                                    SaveGame();
+                                }
+                            }
+                            else
+                            {
+                                int count = 0;
+                                foreach (int i in BuildingsPlacementInMap)
+                                {
+                                    if (i.Equals(5)) ++count;
+                                }
+                                if (!count.Equals(BuildingsPlacementInMap.Length))
+                                {
+                                    reader.Close();
+                                    SaveGame();
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        int count = 0;
+                        foreach (int i in BuildingsPlacementInMap)
+                        {
+                            if (i.Equals(5)) ++count;
+                        }
+                        if (!count.Equals(BuildingsPlacementInMap.Length))
+                        {
+                            SaveGame();
+                        }
+                    }
+                    Console.Clear();
                     break;
                 }
 
                 buildingChoice = buildingChoice == 1 ? building1 : building2;
 
                 int row = 0, column = 0;
-                Console.Write("Row and Column (E.g: 1 20)? ");
                 
                 while (true)
                 {
+                    Console.Write("Row and Column (E.g: 1 20)? ");
                     string[] split = Console.ReadLine().Split(' ');
                     row = int.Parse(split[0]);
 
@@ -94,8 +152,7 @@ namespace SDD_Assignment_2
                     else
                         break;
                 }
-
-\                BuildingsPlacementInMap[row * 20 + column] = buildingChoice;
+                BuildingsPlacementInMap[row * 20 + column] = buildingChoice;
                 coins--;
                 numPlaced++;
 
@@ -106,6 +163,20 @@ namespace SDD_Assignment_2
                 if (first)
                     first = false;
                 SelectBuildings();
+            }
+        }
+
+        //Use this method with care. Might result in deletion of game data accidentally. 
+        public void ClearFile()
+        {
+            if (FileExists())
+            {
+                //Remove contents of the file!!!
+                using (StreamWriter writer = new StreamWriter(GAMESV_FILENAME))
+                {
+                    writer.WriteLine(string.Empty);
+                    writer.Close(); 
+                }
             }
         }
 
@@ -130,12 +201,12 @@ namespace SDD_Assignment_2
 
         int GetCurrentPoints()
         {
-            int points = 0;
+            int points = 0;         
             int index;
-            int roadCount;
-            int nIndustry = 0;
+            int roadCount;          //number of road placed
+            int nIndustry = 0;      //number of industry 
 
-            for (int i = 0; i < 20; i++)
+            for (int i = 0; i < 20; i++) 
             {
                 roadCount = 0;
 
@@ -247,8 +318,11 @@ namespace SDD_Assignment_2
         }
 
         void FinishGame()
-        {  
+        {
             Console.WriteLine($"Game Over! You have scored {GetCurrentPoints()} points!");
+            Console.WriteLine("Please press the 'Enter' key to return to the main menu!"); 
+            
+            //To implement: if the current points is greater than or equal to the highscore then print out a congratulatory message. 
         }
 
         void SelectBuildings()
@@ -267,16 +341,17 @@ namespace SDD_Assignment_2
             Console.Clear();
             Console.WriteLine("Coins: " + coins + "   Points: " + GetCurrentPoints());
 
-            int k = 0;
-            for (int i = 0; i < 20; i++)
+            for (int i = 0, k = 0; i < 20; i++)
             {
                 for (int j = 0; j < 81; j++)
                     Console.Write('=');
 
                 Console.Write('\n');
 
-                for (int j = 0; j < 20; j++)
-                    Console.Write("| " + buildingStr[BuildingsPlacementInMap[k++]] + " ");
+                for (int j = 0; j < 20; j++, k++) // j counts the first time where "|" is inserted. 
+                {
+                    Console.Write("| " + buildingStr[BuildingsPlacementInMap[k]] + " ");
+                } 
 
                 Console.Write("|\n");
             }
