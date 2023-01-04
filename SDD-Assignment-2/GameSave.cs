@@ -86,7 +86,7 @@ namespace SDD_Assignment_2
 
                 building1 = INVALID_BUILDING;
                 building2 = INVALID_BUILDING;
-                coins = 5;
+                coins = 16; 
                 numPlaced = 0;
 
                 //To implement: Get the highscore of the user if the game data file exists.
