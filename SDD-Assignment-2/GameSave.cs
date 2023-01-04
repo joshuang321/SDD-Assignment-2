@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
+using System.Reflection.Emit;
+using System.Reflection.Metadata.Ecma335;
 
 namespace SDD_Assignment_2
 {
@@ -20,7 +22,7 @@ namespace SDD_Assignment_2
         int building1 { get; set; }                     //for storing the first building placeable 
         int building2 { get; set; }                     //for storing the second building placeable
         int highscore { get; set; } = 0;                //for storing the highscore
-        int[] BuildingsPlacementInMap { get; set; }     //placement of the buildings within the map. 
+        public int[] BuildingsPlacementInMap { get; set; }     //placement of the buildings within the map. 
 
         // Store the number of buildings placed
         int numPlaced { get; set; }
@@ -73,7 +75,6 @@ namespace SDD_Assignment_2
                         {
                             Console.Clear();
                         }
-                        return; 
                     }
                     reader.Close(); 
                 } 
@@ -85,11 +86,12 @@ namespace SDD_Assignment_2
 
                 building1 = INVALID_BUILDING;
                 building2 = INVALID_BUILDING;
-                coins = 16;
+                coins = 5;
                 numPlaced = 0;
 
                 //To implement: Get the highscore of the user if the game data file exists.
             }
+            //Object not created at this point.
         }
 
         void SaveGame()

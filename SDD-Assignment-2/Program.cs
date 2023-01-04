@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace SDD_Assignment_2
 {
@@ -10,7 +11,7 @@ namespace SDD_Assignment_2
 
             while (true)
             {
-               DisplayMainMenu();
+                DisplayMainMenu();
                 Console.Write("Please enter your option: ");
                 int choice = int.Parse(Console.ReadLine());
                 if (choice == 0)
@@ -35,8 +36,11 @@ namespace SDD_Assignment_2
                     // create Game object, and call StartGame() to start
                     if (Game.FileExists())
                     {
-                        game = new Game(true);
-                        game.StartGame();
+                        game = new Game(true); 
+                        if (!game.BuildingsPlacementInMap.All(i => i.Equals(0)))
+                        {
+                            game.StartGame(); 
+                        }
                     }
                     else
                     {
