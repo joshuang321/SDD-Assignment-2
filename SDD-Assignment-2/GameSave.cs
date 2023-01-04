@@ -39,7 +39,8 @@ namespace SDD_Assignment_2
                 using (StreamReader reader = File.OpenText(GAMESV_FILENAME))   //initiate StreamReader to start reading contents from the file. 
                 {
                     string data = reader.ReadToEnd();                          //read every single information from the file. 
-                    if (!data.Length.Equals(0))
+                    Console.WriteLine(data.Length); 
+                    if (data.Contains(';'))
                     {
                         string[] dataFilter = data.Split(";");                     //string is stored as a 'Semi-colon' delimited file according to SaveGame() method.....
                         coins = int.Parse(dataFilter[0]);                           //dataFilter[0] returns the number of coins. 
@@ -84,7 +85,7 @@ namespace SDD_Assignment_2
 
                 building1 = INVALID_BUILDING;
                 building2 = INVALID_BUILDING;
-                coins = 5;
+                coins = 16;
                 numPlaced = 0;
 
                 //To implement: Get the highscore of the user if the game data file exists.
