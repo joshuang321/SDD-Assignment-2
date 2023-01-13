@@ -20,16 +20,7 @@ namespace SDD_Assignment_2
                     SelectBuildings();
                 else if (numPlaced == 400 ||
                     coins == 0)
-                {
-                    Console.Clear(); 
                     FinishGame();
-                    ClearFile();
-                    if (Console.ReadKey().Key.Equals(ConsoleKey.Enter))
-                    {
-                        Console.Clear();
-                        break; 
-                    }
-                }
 
                 PrintMenu();
 
@@ -54,6 +45,7 @@ namespace SDD_Assignment_2
                 if (buildingChoice == 3)
                 {
                     //Don't bother saving an empty map. 
+
                     if (FileExists())
                     {
                         using (StreamReader reader = File.OpenText(GAMESV_FILENAME))
@@ -167,7 +159,7 @@ namespace SDD_Assignment_2
         }
 
         //Use this method with care. Might result in deletion of game data accidentally. 
-        public void ClearFile()
+        public static void ClearFile()
         {
             if (FileExists())
             {
@@ -319,10 +311,40 @@ namespace SDD_Assignment_2
 
         void FinishGame()
         {
+            Console.Clear();
+            int score = GetCurrentPoints();
+            bool reachedhs = false;
+
             Console.WriteLine($"Game Over! You have scored {GetCurrentPoints()} points!");
-            Console.WriteLine("Please press the 'Enter' key to return to the main menu!"); 
-            
-            //To implement: if the current points is greater than or equal to the highscore then print out a congratulatory message. 
+
+            List<Highscore> highscores = Highscore.ReadHighscore();
+            for (int i = 0; i < highscores.Count; i++)
+            {
+                if (highscores[i].highscore < score)
+                {
+                    highscores.Insert(i, new Highscore(PromptHighscore(), score));
+                    if (highscores.Count > 10)
+                        highscores.RemoveAt(10);
+                    reachedhs = true;
+                }
+                        
+            }
+            if (!reachedhs && highscores.Count < 10)
+                highscores.Add(new Highscore(PromptHighscore(), score));
+
+            Highscore.DumpHighscore(highscores);
+
+            Console.WriteLine("Please press any key to return to the main menu.");
+
+            ClearFile();
+            Console.ReadKey();
+            Console.Clear();
+        }
+
+        string PromptHighscore()
+        {
+            Console.WriteLine("You just reached a new highscore! Please enter name: ");
+            return Console.ReadLine();
         }
 
         void SelectBuildings()
@@ -348,7 +370,7 @@ namespace SDD_Assignment_2
 
                 Console.Write('\n');
 
-                for (int j = 0; j < 20; j++, k++) // j counts the first time where "|" is inserted. 
+                for (int j = 0; j < 20; j++, k++)
                 {
                     Console.Write("| " + buildingStr[BuildingsPlacementInMap[k]] + " ");
                 } 

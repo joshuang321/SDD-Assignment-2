@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace SDD_Assignment_2
@@ -21,26 +22,16 @@ namespace SDD_Assignment_2
                 }
                 else if (choice == 1)
                 {
-                    // For Documentation/Implementation ..
-                    // Start New Game
-                    // Note: Use new Game() to create Game object, and call StartGame() to start
                     game = new Game();
-                    game.ClearFile();
+                    Game.ClearFile();
                     game.StartGame();
                 }
                 else if (choice == 2)
                 {
-                    // For Documentation/Implementation ..
-                    // Open Saved Game
-                    // Note: Check for if the file exists using CheckIfFileExists(), and then use new Game(loadFromFile=true) to
-                    // create Game object, and call StartGame() to start
                     if (Game.FileExists())
                     {
-                        game = new Game(true); 
-                        if (!game.BuildingsPlacementInMap.All(i => i.Equals(0)))
-                        {
-                            game.StartGame(); 
-                        }
+                        game = new Game(true);
+                        game.StartGame();
                     }
                     else
                     {
@@ -54,9 +45,12 @@ namespace SDD_Assignment_2
                 }
                 else if (choice == 3)
                 {
-                    // For Documentation/Implementation ..
-                    // View Highscore
-                    
+                    List<Highscore> highscoreList = Highscore.ReadHighscore();
+                    Console.WriteLine("=======================HIGHSCORE========================");
+                    for (int i=0; i<highscoreList.Count; i++)
+                    {
+                        Console.WriteLine($"[{i + 1}] {highscoreList[i].name}" + "\t\t\t" + $"{highscoreList[i].highscore}");
+                    }
                 }
             }
         }
